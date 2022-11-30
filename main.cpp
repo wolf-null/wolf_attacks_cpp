@@ -11,8 +11,29 @@
 #include "lib/dumb_templates/orderable_pair.cpp"
 #include "lib/dumb_templates/triplet_on_variant.cpp"
 
+template <class RepresentedType>
+class CustomRepr : public AbstractRepresentation <std::ostream , RepresentedType>
+{
+public:
+    void represent(std::ostream & stream, RepresentedType & object) override
+    {
+        stream << object;
+    }
+};
+
+template <>
+class CustomRepr <std::string> : public AbstractRepresentation <std::ostream , std::string>
+{
+public:
+    void represent(std::ostream & stream, std::string & object) override
+    {
+        stream << '\'' << object << '\'';
+    }
+};
+
+
 int main()
 {
-    Triplet <int, int, std::string> :: Repr <BasicRepresentation<int>, BasicRepresentation<int>, BasicRepresentation<std::string>> triplet {1, 1, "sadf"};
-    std::cout << triplet;
+    Triplet <int, int, std::string> :: Repr <BasicRepresentation, BasicRepresentation, CustomRepr> repr_triplet {1, 1, "sadf"};
+    std::cout << repr_triplet;
 }
