@@ -11,6 +11,8 @@
 #include "lib/dumb_templates/orderable_pair.cpp"
 #include "lib/dumb_templates/triplet_on_variant.cpp"
 
+// ------------------------------------------ CUSTOM REPR PART ---------------------------------------------------------
+
 template <class RepresentedType>
 class CustomRepr : public AbstractRepresentation <std::ostream , RepresentedType>
 {
@@ -31,9 +33,11 @@ public:
     }
 };
 
+// ------------------------------------------------- BODY --------------------------------------------------------------
 
 int main()
 {
     Triplet <int, int, std::string> :: Repr <BasicRepresentation, BasicRepresentation, CustomRepr> repr_triplet {1, 1, "sadf"};
     std::cout << repr_triplet;
 }
+
